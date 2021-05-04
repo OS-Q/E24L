@@ -2,14 +2,30 @@ kind: pipeline
 name: OSQ
 
 steps:
-- name: PIO
+- name: QIO
   image: python:3
   commands:
   - apt update
   - apt install -y git
   - git submodule update --init --recursive
   - pip install -U https://github.com/OS-Q/M03/releases/latest/download/qio.zip
-  - pio platform install https://github.com/OS-Q/P24/archive/qio.zip
+  - pio platform install file://.
+  - pio run -d examples/mbed-rtos-blink-baremetal
+  - pio run -d examples/mbed-rtos-usb-msd
+  - pio run -d examples/mbed-rtos-ethernet-tls
+  - pio run -d examples/mbed-rtos-kvstore
+  - pio run -d examples/mbed-rtos-psa
+  - pio run -d examples/mbed-events
+  - pio run -d examples/mbed-rtos-tls-client
+
+- name: PIO
+  image: python:3
+  commands:
+  - apt update
+  - apt install -y git
+  - git submodule update --init --recursive
+  - pip install -U https://github.com/platformio/platformio/archive/develop.zip
+  - pio platform install file://.
   - pio run -d examples/mbed-rtos-blink-baremetal
   - pio run -d examples/mbed-rtos-usb-msd
   - pio run -d examples/mbed-rtos-ethernet-tls
