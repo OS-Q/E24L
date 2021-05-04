@@ -48,7 +48,7 @@ jobs:
         name: code_check_report
         path: codecheck.txt
 
-  QIO:
+  build:
     strategy:
       fail-fast: false
       matrix:
@@ -60,8 +60,9 @@ jobs:
           - "mbed-rtos-psa"
           - "mbed-events"
           - "mbed-rtos-tls-client"
-          - "zephyr-blink"
-          - "zephyr-net-telnet"
+          # - "zephyr-blink"
+          # - "zephyr-net-telnet"
+
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:

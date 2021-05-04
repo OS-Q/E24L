@@ -1,0 +1,16 @@
+kind: pipeline
+name: OSQ
+
+steps:
+- name: PIO
+  image: python:3
+  commands:
+  - apt update
+  - apt install -y git
+  - git submodule update --init --recursive
+  - sudo apt-get install libc6-i386
+  - pip install -U https://github.com/platformio/platformio/archive/develop.zip
+  - pio platform install https://github.com/OS-Q/P24/archive/pio.zip
+  - pio run -d examples/mbed-rtos-blink-baremetal
+  - pio run -d examples/mbed-rtos-usb-msd
+  - pio run -d examples/mbed-rtos-ethernet-tls
